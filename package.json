@@ -3,14 +3,20 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "cd server && npm start",
-    "server:dev": "cd server && npm run dev",
-    "install:server": "cd server && npm install"
+    "postinstall": "npm --prefix ./client install && npm --prefix ./server install",
+    "start": "concurrently -n server,client -c auto \"npm -w server run start\" \"npm -w client run start\"",
+    "dev": "concurrently -n server,client -c auto \"npm -w server run dev\" \"npm -w client run dev\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
 }
