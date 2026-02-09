@@ -109,16 +109,17 @@ function App() {
     };
   }, [etfData, pricesData, sortField, sortOrder]);
 
-  const handleSort = useCallback((field: SortField) => {
-    setSortField((prev) => {
-      if (prev === field) {
+  const handleSort = useCallback(
+    (field: SortField) => {
+      if (field === sortField) {
         setSortOrder((o) => (o === "asc" ? "desc" : "asc"));
-        return prev;
+      } else {
+        setSortField(field);
+        setSortOrder("asc");
       }
-      setSortOrder("asc");
-      return field;
-    });
-  }, []);
+    },
+    [sortField],
+  );
 
   const handleETFUploaded = (data: ParsedETFData) => {
     setEtfData(data);
